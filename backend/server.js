@@ -76,6 +76,14 @@ app.get('/quiz-forge.html', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/pages/quiz-forge.html'));
 });
 
+app.get('/take-quiz.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/pages/take-quiz.html'));
+});
+
+app.get('/quiz-results.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/pages/quiz-results.html'));
+});
+
 app.get('/auth-success.html', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/pages/auth-success.html'));
 });
