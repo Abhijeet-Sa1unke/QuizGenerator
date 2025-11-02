@@ -66,6 +66,8 @@ const startQuiz = async (req, res) => {
     const { assignmentId } = req.params;
     const studentId = req.user.id;
 
+    console.log('Starting quiz for assignmentId:', assignmentId, 'studentId:', studentId);
+
     // Verify assignment belongs to student
     const assignmentResult = await query(
       `SELECT qa.*, q.id as quiz_id, q.title, q.total_questions, q.duration_minutes
@@ -91,14 +93,33 @@ const startQuiz = async (req, res) => {
       return res.status(400).json({ error: 'Quiz already completed' });
     }
 
-    // Create or get attempt
-    const attemptResult = await query(
-      `INSERT INTO quiz_attempts (assignment_id, student_id, quiz_id, total_points)
-       VALUES ($1, $2, $3, $4)
-       ON CONFLICT (assignment_id) DO UPDATE SET started_at = CURRENT_TIMESTAMP
-       RETURNING *`,
-      [assignmentId, studentId, assignment.quiz_id, assignment.total_questions]
+    // Create or get attempt - Fixed to handle both new and existing attempts
+    let attempt;
+    const checkAttempt = await query(
+      'SELECT * FROM quiz_attempts WHERE assignment_id = $1',
+      [assignmentId]
     );
+
+    if (checkAttempt.rows.length > 0) {
+      // Update existing attempt
+      const attemptResult = await query(
+        `UPDATE quiz_attempts 
+         SET started_at = CURRENT_TIMESTAMP 
+         WHERE assignment_id = $1 
+         RETURNING *`,
+        [assignmentId]
+      );
+      attempt = attemptResult.rows[0];
+    } else {
+      // Create new attempt
+      const attemptResult = await query(
+        `INSERT INTO quiz_attempts (assignment_id, student_id, quiz_id, total_points)
+         VALUES ($1, $2, $3, $4)
+         RETURNING *`,
+        [assignmentId, studentId, assignment.quiz_id, assignment.total_questions]
+      );
+      attempt = attemptResult.rows[0];
+    }
 
     // Update assignment status
     await query(
@@ -106,7 +127,7 @@ const startQuiz = async (req, res) => {
       [assignmentId]
     );
 
-    // Get quiz questions
+    // Get quiz questions - Fixed to return proper format
     const questionsResult = await query(
       `SELECT q.id, q.question_text, q.question_type, q.points,
        json_agg(json_build_object(
@@ -123,7 +144,7 @@ const startQuiz = async (req, res) => {
     );
 
     res.json({
-      attempt: attemptResult.rows[0],
+      attempt: attempt,
       quiz: {
         title: assignment.title,
         durationMinutes: assignment.duration_minutes,
@@ -154,14 +175,16 @@ const submitQuiz = async (req, res) => {
     );
 
     if (attemptResult.rows.length === 0) {
-      throw new Error('Attempt not found');
+      await client.query('ROLLBACK');
+      return res.status(404).json({ error: 'Attempt not found' });
     }
 
     const attempt = attemptResult.rows[0];
 
     // Check if already completed
     if (attempt.completed_at) {
-      throw new Error('Quiz already submitted');
+      await client.query('ROLLBACK');
+      return res.status(400).json({ error: 'Quiz already submitted' });
     }
 
     let totalScore = 0;
@@ -173,6 +196,10 @@ const submitQuiz = async (req, res) => {
         'SELECT * FROM question_options WHERE id = $1',
         [answer.selectedOptionId]
       );
+
+      if (optionResult.rows.length === 0) {
+        continue; // Skip invalid options
+      }
 
       const option = optionResult.rows[0];
       const isCorrect = option.is_correct;
@@ -191,7 +218,7 @@ const submitQuiz = async (req, res) => {
     }
 
     // Calculate score percentage
-    const scorePercentage = (totalScore / attempt.total_points) * 100;
+    const scorePercentage = attempt.total_points > 0 ? (totalScore / attempt.total_points) * 100 : 0;
 
     // Calculate time taken
     const timeTaken = Math.floor(
