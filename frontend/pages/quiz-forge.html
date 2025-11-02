@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizForge - EduPlay</title>
+    <link rel="stylesheet" href="../css/quiz-forge.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>⚙️ EduPlay</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/teacher_dashboard" class="nav-link">Dashboard</a></li>
+                <li><a href="/quiz-forge.html" class="nav-link active">Create Quiz</a></li>
+                <li><a href="#" class="nav-link">Track Progress</a></li>
+                <li><a href="#" class="nav-link">Library</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="btn-logout" id="logout-btn">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="quiz-forge-container">
+        <div class="forge-header">
+            <h1>QuizForge</h1>
+            <p>Upload a PDF and generate multiple choice questions automatically</p>
+        </div>
+
+        <div class="forge-content">
+            <form id="quiz-forge-form" class="forge-form">
+                <!-- PDF Upload -->
+                <div class="form-section">
+                    <label class="form-label">PDF FILE</label>
+                    <div class="file-upload-area" id="file-upload-area">
+                        <div class="upload-icon">📄</div>
+                        <p class="upload-text">Drop your PDF here or click to browse</p>
+                        <p class="upload-subtext">Click to change file</p>
+                        <input type="file" id="pdf-file" accept=".pdf" hidden>
+                    </div>
+                    <div class="file-info" id="file-info" style="display: none;">
+                        <span id="file-name"></span>
+                        <button type="button" class="btn-remove" id="remove-file">×</button>
+                    </div>
+                </div>
+
+                <!-- Number of Questions -->
+                <div class="form-section">
+                    <label class="form-label" for="num-questions">NUMBER OF QUESTIONS</label>
+                    <input type="number" id="num-questions" min="1" max="50" value="5" class="form-input">
+                </div>
+
+                <!-- Difficulty Level -->
+                <div class="form-section">
+                    <label class="form-label" for="difficulty">DIFFICULTY LEVEL</label>
+                    <select id="difficulty" class="form-select">
+                        <option value="easy">Easy</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                </div>
+
+                <!-- Topics -->
+                <div class="form-section">
+                    <label class="form-label">TOPIC(S)</label>
+                    <div class="topics-container">
+                        <div class="topic-pills" id="topic-pills">
+                            <span class="topic-pill active" data-topic="Data analysis">Data analysis</span>
+                            <span class="topic-pill" data-topic="Charging time">Charging time</span>
+                            <span class="topic-pill" data-topic="Data visualization">Data visualization</span>
+                            <span class="topic-pill" data-topic="All">All</span>
+                        </div>
+                        <input type="text" id="topics-display" class="form-input" readonly placeholder="Selected topics will appear here">
+                    </div>
+                </div>
+
+                <!-- Subject Selection -->
+                <div class="form-section">
+                    <label class="form-label" for="subject">SUBJECT</label>
+                    <select id="subject" class="form-select" required>
+                        <option value="">Select subject</option>
+                    </select>
+                </div>
+
+                <!-- AI Provider -->
+                <div class="form-section">
+                    <label class="form-label" for="ai-provider">AI PROVIDER</label>
+                    <select id="ai-provider" class="form-select">
+                        <option value="openai" selected>OpenAI</option>
+                        <option value="claude">Claude (Coming Soon)</option>
+                        <option value="gemini">Gemini (Coming Soon)</option>
+                    </select>
+                </div>
+
+                <!-- MCQ Type -->
+                <div class="form-section">
+                    <label class="form-label" for="mcq-type">MCQ TYPE</label>
+                    <select id="mcq-type" class="form-select">
+                        <option value="multiple_answer" selected>Multiple answer correct</option>
+                        <option value="single_answer">Single answer correct</option>
+                    </select>
+                </div>
+
+                <!-- Generate Button -->
+                <button type="submit" class="btn btn-generate" id="generate-btn">
+                    <span class="btn-text">Generate MCQs</span>
+                    <span class="btn-loader" style="display: none;">Generating...</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section" id="results-section" style="display: none;">
+            <div class="results-header">
+                <h2>Generated Quiz</h2>
+                <div class="results-actions">
+                    <button class="btn btn-secondary" id="edit-quiz-btn">Edit</button>
+                    <button class="btn btn-primary" id="save-quiz-btn">Save Quiz</button>
+                </div>
+            </div>
+            <div class="questions-list" id="questions-list">
+                <!-- Generated questions will appear here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/quiz-forge.js"></script>
+</body>
+</html>

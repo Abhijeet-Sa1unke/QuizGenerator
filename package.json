@@ -1,34 +1,39 @@
 {
   "name": "eduplay",
   "version": "1.0.0",
-  "description": "",
-  "homepage": "https://github.com/Abhijeet-Sa1unke/EduPlay#readme",
-  "bugs": {
-    "url": "https://github.com/Abhijeet-Sa1unke/EduPlay/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Abhijeet-Sa1unke/EduPlay.git"
-  },
-  "license": "ISC",
-  "author": "",
-  "type": "module",
-  "main": "index.js",
+  "description": "Educational platform with AI-powered quiz generation",
+  "main": "backend/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js",
+    "init-db": "psql -U postgres -f database/schema.sql"
   },
+  "keywords": [
+    "education",
+    "quiz",
+    "learning",
+    "ai"
+  ],
+  "author": "",
+  "license": "MIT",
   "dependencies": {
-    "bcrypt": "^6.0.0",
-    "body-parser": "^2.2.0",
-    "connect-flash": "^0.1.1",
-    "dotenv": "^17.2.2",
-    "ejs": "^3.1.10",
-    "express": "^5.1.0",
-    "express-session": "^1.18.2",
+    "axios": "^1.6.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
     "passport": "^0.7.0",
-    "passport-facebook": "^3.0.0",
     "passport-google-oauth20": "^2.0.0",
     "passport-local": "^1.0.0",
-    "pg": "^8.16.3"
+    "pdf-parse": "^1.1.1",
+    "pg": "^8.11.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }
