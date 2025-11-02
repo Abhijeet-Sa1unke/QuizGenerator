@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - EduPlay</title>
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>🎓 EduPlay</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/student_dashboard" class="nav-link active">Dashboard</a></li>
+                <li><a href="#" class="nav-link">Subjects</a></li>
+                <li><a href="#" class="nav-link">Rewards</a></li>
+                <li><a href="#" class="nav-link">Profile</a></li>
+            </ul>
+            <div class="nav-actions">
+                <select class="lang-selector" id="language">
+                    <option value="en">English</option>
+                </select>
+                <button class="btn-status offline" id="status-btn">Offline</button>
+                <button class="btn-logout" id="logout-btn">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="dashboard-container">
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <div class="welcome-content">
+                <div class="welcome-avatar">
+                    <div class="avatar-circle">
+                        👨‍🎓
+                    </div>
+                </div>
+                <div class="welcome-text">
+                    <h1>Welcome back, <span id="student-name">Student</span>!</h1>
+                    <p>Ready to continue your learning journey?</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Subjects Grid -->
+        <div class="subjects-grid" id="subjects-grid">
+            <!-- Mathematics Card -->
+            <div class="subject-card">
+                <div class="subject-header red">
+                    <div class="subject-icon">➕</div>
+                    <h3>Mathematics</h3>
+                </div>
+                <div class="subject-progress">
+                    <div class="progress-circle">
+                        <svg width="120" height="120">
+                            <circle cx="60" cy="60" r="54" stroke="#f0f0f0" stroke-width="12" fill="none"/>
+                            <circle cx="60" cy="60" r="54" stroke="#ef4444" stroke-width="12" fill="none" 
+                                    stroke-dasharray="339.292" stroke-dashoffset="84.823" 
+                                    transform="rotate(-90 60 60)"/>
+                        </svg>
+                        <div class="progress-text">75%</div>
+                    </div>
+                </div>
+                <div class="subject-info">
+                    <p class="subject-status">Continue Algebra</p>
+                    <button class="btn-start">Start Learning</button>
+                </div>
+            </div>
+
+            <!-- Science Card -->
+            <div class="subject-card">
+                <div class="subject-header green">
+                    <div class="subject-icon">🔬</div>
+                    <h3>Science</h3>
+                </div>
+                <div class="subject-progress">
+                    <div class="progress-circle">
+                        <svg width="120" height="120">
+                            <circle cx="60" cy="60" r="54" stroke="#f0f0f0" stroke-width="12" fill="none"/>
+                            <circle cx="60" cy="60" r="54" stroke="#22c55e" stroke-width="12" fill="none" 
+                                    stroke-dasharray="339.292" stroke-dashoffset="135.717" 
+                                    transform="rotate(-90 60 60)"/>
+                        </svg>
+                        <div class="progress-text">60%</div>
+                    </div>
+                </div>
+                <div class="subject-info">
+                    <p class="subject-status">Physics Chapter 5</p>
+                    <button class="btn-start">Start Learning</button>
+                </div>
+            </div>
+
+            <!-- Technology Card -->
+            <div class="subject-card">
+                <div class="subject-header blue">
+                    <div class="subject-icon">💻</div>
+                    <h3>Technology</h3>
+                </div>
+                <div class="subject-progress">
+                    <div class="progress-circle">
+                        <svg width="120" height="120">
+                            <circle cx="60" cy="60" r="54" stroke="#f0f0f0" stroke-width="12" fill="none"/>
+                            <circle cx="60" cy="60" r="54" stroke="#3b82f6" stroke-width="12" fill="none" 
+                                    stroke-dasharray="339.292" stroke-dashoffset="50.894" 
+                                    transform="rotate(-90 60 60)"/>
+                        </svg>
+                        <div class="progress-text">85%</div>
+                    </div>
+                </div>
+                <div class="subject-info">
+                    <p class="subject-status">Web Development</p>
+                    <button class="btn-start">Start Learning</button>
+                </div>
+            </div>
+
+            <!-- Daily Challenge Card -->
+            <div class="subject-card">
+                <div class="subject-header yellow">
+                    <div class="subject-icon">🏆</div>
+                    <h3>Daily Challenge</h3>
+                </div>
+                <div class="subject-progress">
+                    <div class="progress-circle">
+                        <svg width="120" height="120">
+                            <circle cx="60" cy="60" r="54" stroke="#f0f0f0" stroke-width="12" fill="none"/>
+                            <circle cx="60" cy="60" r="54" stroke="#f59e0b" stroke-width="12" fill="none" 
+                                    stroke-dasharray="339.292" stroke-dashoffset="203.575" 
+                                    transform="rotate(-90 60 60)"/>
+                        </svg>
+                        <div class="progress-text">2/5</div>
+                    </div>
+                </div>
+                <div class="subject-info">
+                    <p class="subject-status">Logic Puzzle</p>
+                    <button class="btn-start">Start Learning</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Assigned Quizzes Section -->
+        <div class="quizzes-section">
+            <h2>Assigned Quizzes</h2>
+            <div class="quizzes-list" id="quizzes-list">
+                <div class="loading">Loading quizzes...</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/student-dashboard.js"></script>
+</body>
+</html>
