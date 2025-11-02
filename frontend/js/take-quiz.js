@@ -25,19 +25,26 @@ function checkAuth() {
 
 function getAssignmentId() {
     const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('assignment');
+    const assignmentIdFromUrl = urlParams.get('assignment');
+    console.log('Assignment ID from URL:', assignmentIdFromUrl); // Debug log
+    return assignmentIdFromUrl;
 }
 
 async function loadQuiz() {
     assignmentId = getAssignmentId();
     
+    console.log('Loading quiz with assignment ID:', assignmentId); // Debug log
+    
     if (!assignmentId) {
-        alert('Invalid quiz assignment');
+        alert('Invalid quiz assignment - no assignment ID found');
+        console.error('No assignment ID in URL');
         window.location.href = '/student_dashboard';
         return;
     }
     
     try {
+        console.log('Making request to:', `${API_URL}/student/quiz/${assignmentId}/start`); // Debug log
+        
         const response = await fetch(`${API_URL}/student/quiz/${assignmentId}/start`, {
             method: 'POST',
             headers: {
@@ -46,8 +53,12 @@ async function loadQuiz() {
             }
         });
         
+        console.log('Response status:', response.status); // Debug log
+        
         if (response.ok) {
             const data = await response.json();
+            console.log('Quiz data received:', data); // Debug log
+            
             attemptId = data.attempt.id;
             questions = data.quiz.questions;
             
@@ -63,13 +74,13 @@ async function loadQuiz() {
             displayQuestion();
         } else {
             const error = await response.json();
+            console.error('Error response:', error); // Debug log
             alert(error.error || 'Failed to load quiz');
             window.location.href = '/student_dashboard';
         }
     } catch (error) {
         console.error('Load quiz error:', error);
-        alert('Network error. Please try again.');
-        window.location.href = '/student_dashboard';
+        alert('Network error. Please check console for details.');
     }
 }
 
@@ -181,6 +192,8 @@ async function submitQuiz() {
         questionId: q.id,
         selectedOptionId: answers[q.id] || null
     })).filter(a => a.selectedOptionId !== null);
+    
+    console.log('Submitting answers:', answersArray); // Debug log
     
     try {
         const response = await fetch(`${API_URL}/student/quiz/${attemptId}/submit`, {

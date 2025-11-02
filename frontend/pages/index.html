@@ -14,187 +14,23 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             overflow-x: hidden;
-        }
-
-        /* Navigation */
-        .navbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            z-index: 1000;
-            padding: 1rem 0;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            text-align: center;
+            color: white;
+            padding: 2rem;
+            max-width: 600px;
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: #1f2937;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #667eea;
-        }
-
-        .nav-buttons {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s;
-            cursor: pointer;
-            border: none;
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: #667eea;
-            border: 2px solid #667eea;
-        }
-
-        .btn-secondary:hover {
-            background: #667eea;
-            color: white;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-        }
-
-        /* Hero Section */
-        .hero {
-            margin-top: 80px;
-            min-height: 90vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            width: 500px;
-            height: 500px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            top: -200px;
-            right: -200px;
-        }
-
-        .hero::after {
-            content: '';
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            bottom: -150px;
-            left: -150px;
-        }
-
-        .hero-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-text h1 {
-            font-size: 3.5rem;
-            color: white;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-        }
-
-        .hero-text p {
-            font-size: 1.25rem;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 2rem;
-            line-height: 1.6;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .hero-buttons .btn {
-            padding: 1rem 2rem;
-            font-size: 1.1rem;
-        }
-
-        .btn-white {
-            background: white;
-            color: #667eea;
-        }
-
-        .btn-white:hover {
-            background: #f9fafb;
-        }
-
-        .hero-image {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .hero-image-placeholder {
-            width: 100%;
-            max-width: 500px;
-            height: 400px;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 8rem;
+            font-size: 5rem;
+            margin-bottom: 1rem;
             animation: float 3s ease-in-out infinite;
         }
 
@@ -203,400 +39,102 @@
             50% { transform: translateY(-20px); }
         }
 
-        /* Features Section */
-        .features {
-            padding: 6rem 2rem;
-            background: #f9fafb;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-header h2 {
-            font-size: 2.5rem;
-            color: #1f2937;
-            margin-bottom: 1rem;
-        }
-
-        .section-header p {
-            font-size: 1.25rem;
-            color: #6b7280;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .feature-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 16px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        .feature-icon {
+        h1 {
             font-size: 3rem;
             margin-bottom: 1rem;
         }
 
-        .feature-card h3 {
-            font-size: 1.5rem;
-            color: #1f2937;
-            margin-bottom: 1rem;
+        p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
         }
 
-        .feature-card p {
-            color: #6b7280;
-            line-height: 1.6;
-        }
-
-        /* How It Works */
-        .how-it-works {
-            padding: 6rem 2rem;
-            background: white;
-        }
-
-        .steps-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-            margin-top: 3rem;
-        }
-
-        .step {
-            text-align: center;
-        }
-
-        .step-number {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 50%;
+        .buttons {
             display: flex;
-            align-items: center;
+            gap: 1rem;
             justify-content: center;
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin: 0 auto 1.5rem;
+            flex-wrap: wrap;
         }
 
-        .step h3 {
-            font-size: 1.25rem;
-            color: #1f2937;
-            margin-bottom: 1rem;
-        }
-
-        .step p {
-            color: #6b7280;
-            line-height: 1.6;
-        }
-
-        /* CTA Section */
-        .cta {
-            padding: 6rem 2rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            text-align: center;
-        }
-
-        .cta h2 {
-            font-size: 2.5rem;
-            color: white;
-            margin-bottom: 1rem;
-        }
-
-        .cta p {
-            font-size: 1.25rem;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 2rem;
-        }
-
-        /* Footer */
-        .footer {
-            background: #1f2937;
-            color: white;
-            padding: 3rem 2rem 1rem;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 1rem;
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-section a {
-            color: rgba(255, 255, 255, 0.7);
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            font-weight: 600;
             text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-section a:hover {
-            color: white;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        /* Mobile Menu */
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
+            transition: all 0.3s;
             cursor: pointer;
+            border: none;
+            font-size: 1.1rem;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #667eea;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
 
         @media (max-width: 768px) {
-            .mobile-menu-btn {
-                display: block;
+            h1 {
+                font-size: 2rem;
             }
 
-            .nav-links {
-                display: none;
+            .logo {
+                font-size: 3rem;
             }
 
-            .hero-content {
-                grid-template-columns: 1fr;
-                text-align: center;
+            p {
+                font-size: 1rem;
             }
 
-            .hero-text h1 {
-                font-size: 2.5rem;
+            .buttons {
+                flex-direction: column;
             }
 
-            .hero-image {
-                display: none;
-            }
-
-            .hero-buttons {
-                justify-content: center;
-            }
-
-            .features-grid,
-            .steps-grid {
-                grid-template-columns: 1fr;
+            .btn {
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">🎓 EduPlay</div>
-            <ul class="nav-links">
-                <li><a href="#features">Features</a></li>
-                <li><a href="#how-it-works">How It Works</a></li>
-                <li><a href="#about">About</a></li>
-            </ul>
-            <div class="nav-buttons">
-                <a href="/login.html" class="btn btn-secondary">Login</a>
-                <a href="/register.html" class="btn btn-primary">Get Started</a>
-            </div>
-            <button class="mobile-menu-btn">☰</button>
+    <div class="container">
+        <div class="logo">🎓</div>
+        <h1>EduPlay</h1>
+        <p>AI-Powered Learning Platform</p>
+        <div class="buttons" id="button-container">
+            <a href="/login.html" class="btn btn-secondary">Login</a>
+            <a href="/register.html" class="btn btn-primary">Get Started</a>
         </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1>Transform Learning with AI-Powered Quizzes</h1>
-                <p>Create engaging quizzes from any PDF in seconds. EduPlay uses advanced AI to generate personalized assessments that enhance learning outcomes.</p>
-                <div class="hero-buttons">
-                    <a href="/register.html" class="btn btn-white">Start Free Trial</a>
-                    <a href="#how-it-works" class="btn btn-secondary" style="color: white; border-color: white;">Learn More</a>
-                </div>
-            </div>
-            <div class="hero-image">
-                <div class="hero-image-placeholder">🎯</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <div class="container">
-            <div class="section-header">
-                <h2>Powerful Features for Modern Learning</h2>
-                <p>Everything you need to create, manage, and track educational assessments</p>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🤖</div>
-                    <h3>AI Quiz Generation</h3>
-                    <p>Upload any PDF and our AI instantly generates high-quality multiple-choice questions tailored to your content.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">✏️</div>
-                    <h3>Easy Editing</h3>
-                    <p>Customize generated questions, modify answers, and adjust difficulty levels with our intuitive editor.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">⏱️</div>
-                    <h3>Timed Assessments</h3>
-                    <p>Set time limits, track progress, and ensure fair evaluation with built-in timer functionality.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Detailed Analytics</h3>
-                    <p>Track student performance, identify weak areas, and gain insights with comprehensive analytics.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">👥</div>
-                    <h3>Student Management</h3>
-                    <p>Easily assign quizzes to students, monitor their progress, and manage multiple classes effortlessly.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🎨</div>
-                    <h3>Beautiful Interface</h3>
-                    <p>Enjoy a modern, intuitive interface that makes quiz creation and management a breeze.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How It Works -->
-    <section class="how-it-works" id="how-it-works">
-        <div class="container">
-            <div class="section-header">
-                <h2>How It Works</h2>
-                <p>Create professional quizzes in just three simple steps</p>
-            </div>
-            <div class="steps-grid">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>Upload PDF</h3>
-                    <p>Upload your educational content in PDF format - textbooks, notes, or any learning material.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>AI Generates Quiz</h3>
-                    <p>Our AI analyzes the content and creates relevant multiple-choice questions automatically.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>Edit & Assign</h3>
-                    <p>Review, customize questions if needed, and assign the quiz to your students instantly.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <h3>Track Results</h3>
-                    <p>Monitor student performance, view detailed results, and identify areas for improvement.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <h2>Ready to Transform Your Teaching?</h2>
-            <p>Join thousands of educators using EduPlay to create engaging assessments</p>
-            <div class="hero-buttons">
-                <a href="/register.html" class="btn btn-white">Get Started Free</a>
-                <a href="/login.html" class="btn btn-secondary" style="color: white; border-color: white;">Sign In</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>🎓 EduPlay</h3>
-                <p>AI-powered learning platform for modern education</p>
-            </div>
-            <div class="footer-section">
-                <h3>Product</h3>
-                <ul>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#how-it-works">How It Works</a></li>
-                    <li><a href="/register.html">Pricing</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Company</h3>
-                <ul>
-                    <li><a href="#about">About Us</a></li>
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="#">Careers</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Support</h3>
-                <ul>
-                    <li><a href="#">Help Center</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Service</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 EduPlay. All rights reserved.</p>
-        </div>
-    </footer>
+    </div>
 
     <script>
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
         // Check if user is already logged in
         const token = localStorage.getItem('token');
         const role = localStorage.getItem('userRole');
         
         if (token && role) {
-            // Update navigation buttons
-            const navButtons = document.querySelector('.nav-buttons');
+            // Update buttons for logged-in users
+            const buttonContainer = document.getElementById('button-container');
+            
             if (role === 'student') {
-                navButtons.innerHTML = '<a href="/student_dashboard" class="btn btn-primary">Go to Dashboard</a>';
+                buttonContainer.innerHTML = '<a href="/student_dashboard" class="btn btn-primary">Go to Dashboard</a>';
             } else if (role === 'teacher') {
-                navButtons.innerHTML = '<a href="/teacher_dashboard" class="btn btn-primary">Go to Dashboard</a>';
+                buttonContainer.innerHTML = '<a href="/teacher_dashboard" class="btn btn-primary">Go to Dashboard</a>';
             }
         }
     </script>

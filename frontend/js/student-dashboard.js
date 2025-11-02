@@ -22,18 +22,24 @@ async function loadDashboard() {
     if (!checkAuth()) return;
     
     try {
+        console.log('Fetching dashboard data...'); // Debug
         const response = await fetch(`${API_URL}/student/dashboard`, {
             headers: {
                 'Authorization': `Bearer ${getAuthToken()}`
             }
         });
         
+        console.log('Dashboard response status:', response.status); // Debug
+        
         if (response.ok) {
             const data = await response.json();
+            console.log('Dashboard data received:', data); // Debug
             displayDashboard(data);
         } else if (response.status === 401) {
             logout();
         } else {
+            const errorData = await response.json();
+            console.error('Dashboard error:', errorData); // Debug
             showError('Failed to load dashboard');
         }
     } catch (error) {
@@ -110,31 +116,57 @@ function updateSubjectsDisplay(subjects) {
 function displayQuizzes(quizzes) {
     const quizzesList = document.getElementById('quizzes-list');
     
-    const html = quizzes.map(quiz => `
-        <div class="quiz-item">
-            <div class="quiz-info">
-                <h3>${quiz.title}</h3>
-                <p class="quiz-meta">
-                    ${quiz.subject_name} • ${quiz.total_questions} questions • 
-                    ${quiz.duration_minutes} minutes
-                </p>
-            </div>
-            <div class="quiz-actions">
-                ${quiz.status === 'completed' 
-                    ? `<span class="quiz-status completed">Completed - ${Math.round(quiz.score)}%</span>`
-                    : `<button class="btn-start" onclick="startQuiz(${quiz.id})">
-                        ${quiz.status === 'in_progress' ? 'Continue' : 'Start'}
-                       </button>`
-                }
-            </div>
-        </div>
-    `).join('');
+    console.log('All quizzes received:', quizzes); // Debug: see all quiz data
     
-    quizzesList.innerHTML = html;
+    // Clear the list first
+    quizzesList.innerHTML = '';
+    
+    // Create quiz items with proper event listeners
+    quizzes.forEach((quiz, index) => {
+        console.log(`Quiz ${index}:`, quiz); // Debug: see individual quiz
+        
+        const quizItem = document.createElement('div');
+        quizItem.className = 'quiz-item';
+        
+        const quizInfo = document.createElement('div');
+        quizInfo.className = 'quiz-info';
+        quizInfo.innerHTML = `
+            <h3>${quiz.title}</h3>
+            <p class="quiz-meta">
+                ${quiz.subject_name} • ${quiz.total_questions} questions • 
+                ${quiz.duration_minutes} minutes
+            </p>
+        `;
+        
+        const quizActions = document.createElement('div');
+        quizActions.className = 'quiz-actions';
+        
+        if (quiz.status === 'completed') {
+            quizActions.innerHTML = `<span class="quiz-status completed">Completed - ${Math.round(quiz.score)}%</span>`;
+        } else {
+            const startBtn = document.createElement('button');
+            startBtn.className = 'btn-start';
+            startBtn.textContent = quiz.status === 'in_progress' ? 'Continue' : 'Start';
+            
+            // Use event listener instead of inline onclick
+            startBtn.addEventListener('click', () => {
+                console.log('Button clicked for quiz:', quiz); // Debug
+                console.log('Assignment ID:', quiz.id); // Debug
+                startQuiz(quiz.id);
+            });
+            
+            quizActions.appendChild(startBtn);
+        }
+        
+        quizItem.appendChild(quizInfo);
+        quizItem.appendChild(quizActions);
+        quizzesList.appendChild(quizItem);
+    });
 }
 
-// Start quiz
+// Start quiz - FIX: This now receives assignment_id
 function startQuiz(assignmentId) {
+    console.log('Starting quiz with assignment ID:', assignmentId); // Debug log
     // Store assignment ID and redirect to quiz page
     localStorage.setItem('currentQuizAssignment', assignmentId);
     window.location.href = `/take-quiz.html?assignment=${assignmentId}`;
