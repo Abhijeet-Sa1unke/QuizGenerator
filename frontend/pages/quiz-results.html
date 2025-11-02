@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Results - EduPlay</title>
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <style>
+        .results-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .results-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 1rem;
+            position: relative;
+        }
+
+        .score-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .results-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .stat-box {
+            background: rgba(255,255,255,0.2);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .answer-review {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .review-question {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .review-question:last-child {
+            border-bottom: none;
+        }
+
+        .question-status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .status-correct {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-incorrect {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .answer-option {
+            padding: 0.75rem 1rem;
+            margin: 0.5rem 0;
+            border-radius: 8px;
+            border: 2px solid #e5e7eb;
+        }
+
+        .answer-option.correct {
+            border-color: #22c55e;
+            background: #f0fdf4;
+        }
+
+        .answer-option.incorrect {
+            border-color: #ef4444;
+            background: #fef2f2;
+        }
+
+        .answer-option.your-answer::before {
+            content: "Your Answer: ";
+            font-weight: 600;
+        }
+
+        .answer-option.correct-answer::before {
+            content: "Correct Answer: ";
+            font-weight: 600;
+            color: #22c55e;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>🎓 EduPlay</h2>
+            </div>
+            <div class="nav-actions">
+                <button class="btn-logout" onclick="window.location.href='/student_dashboard'">Back to Dashboard</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="results-container">
+        <div id="loading-section" class="loading">
+            <h2>Loading results...</h2>
+        </div>
+
+        <div id="results-section" style="display: none;">
+            <!-- Results Header -->
+            <div class="results-header">
+                <h1 id="quiz-title">Quiz Results</h1>
+                <div class="score-circle">
+                    <svg width="150" height="150">
+                        <circle cx="75" cy="75" r="68" stroke="#ffffff40" stroke-width="12" fill="none"/>
+                        <circle id="score-circle" cx="75" cy="75" r="68" stroke="#ffffff" stroke-width="12" fill="none" 
+                                stroke-dasharray="427" stroke-dashoffset="213" 
+                                transform="rotate(-90 75 75)"/>
+                    </svg>
+                    <div class="score-text" id="score-text">0%</div>
+                </div>
+                <div class="results-stats">
+                    <div class="stat-box">
+                        <span class="stat-value" id="correct-count">0</span>
+                        <span class="stat-label">Correct</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-value" id="incorrect-count">0</span>
+                        <span class="stat-label">Incorrect</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-value" id="time-taken">0m</span>
+                        <span class="stat-label">Time Taken</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Answer Review -->
+            <div class="answer-review">
+                <h2>Answer Review</h2>
+                <div id="answers-list">
+                    <!-- Answers will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <a href="/student_dashboard" class="btn btn-primary">Back to Dashboard</a>
+                <button class="btn btn-secondary" onclick="window.print()">Print Results</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3000/api';
+
+        function getAuthToken() {
+            return localStorage.getItem('token');
+        }
+
+        function getAttemptId() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('attempt');
+        }
+
+        async function loadResults() {
+            const attemptId = getAttemptId();
+            
+            if (!attemptId) {
+                alert('Invalid quiz attempt');
+                window.location.href = '/student_dashboard';
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}/student/quiz/${attemptId}/results`, {
+                    headers: {
+                        'Authorization': `Bearer ${getAuthToken()}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    displayResults(data);
+                } else {
+                    alert('Failed to load results');
+                    window.location.href = '/student_dashboard';
+                }
+            } catch (error) {
+                console.error('Load results error:', error);
+                alert('Network error');
+                window.location.href = '/student_dashboard';
+            }
+        }
+
+        function displayResults(data) {
+            const { attempt, answers } = data;
+            
+            // Set title
+            document.getElementById('quiz-title').textContent = attempt.title;
+            
+            // Set score
+            const score = Math.round(attempt.score);
+            document.getElementById('score-text').textContent = `${score}%`;
+            
+            // Animate score circle
+            const circumference = 427;
+            const offset = circumference - (circumference * score / 100);
+            document.getElementById('score-circle').style.strokeDashoffset = offset;
+            
+            // Set stats
+            const correctCount = answers.filter(a => a.is_correct).length;
+            const incorrectCount = answers.length - correctCount;
+            
+            document.getElementById('correct-count').textContent = correctCount;
+            document.getElementById('incorrect-count').textContent = incorrectCount;
+            document.getElementById('time-taken').textContent = `${attempt.time_taken_minutes || 0}m`;
+            
+            // Display answers
+            const answersList = document.getElementById('answers-list');
+            const html = answers.map((answer, index) => `
+                <div class="review-question">
+                    <span class="question-status ${answer.is_correct ? 'status-correct' : 'status-incorrect'}">
+                        ${answer.is_correct ? '✓ Correct' : '✗ Incorrect'}
+                    </span>
+                    <h3 style="margin: 0.5rem 0;">Question ${index + 1}</h3>
+                    <p style="margin-bottom: 1rem;">${answer.question_text}</p>
+                    
+                    ${!answer.is_correct ? `
+                        <div class="answer-option incorrect your-answer">
+                            ${answer.selected_option || 'No answer selected'}
+                        </div>
+                    ` : ''}
+                    
+                    <div class="answer-option correct ${answer.is_correct ? 'your-answer' : 'correct-answer'}">
+                        ${answer.correct_option}
+                    </div>
+                </div>
+            `).join('');
+            
+            answersList.innerHTML = html;
+            
+            // Show results
+            document.getElementById('loading-section').style.display = 'none';
+            document.getElementById('results-section').style.display = 'block';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadResults();
+        });
+    </script>
+</body>
+</html>
